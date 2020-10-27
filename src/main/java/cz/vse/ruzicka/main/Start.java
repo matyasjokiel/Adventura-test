@@ -1,0 +1,65 @@
+/* Soubor je ulozen v kodovani UTF-8.
+ * Kontrola kódování: Příliš žluťoučký kůň úpěl ďábelské ódy. */
+package cz.vse.ruzicka.main;
+
+
+import cz.vse.ruzicka.MainController;
+import cz.vse.ruzicka.logika.Hra;
+import cz.vse.ruzicka.logika.IHra;
+import cz.vse.ruzicka.uiText.TextoveRozhrani;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.util.Arrays;
+import java.util.List;
+
+/*******************************************************************************
+ * Třída {@code Start} je hlavní třídou projektu,
+ * který ...
+ *
+ * @author    jméno autora
+ * @version   0.00.000
+ */
+public class Start extends Application
+{
+    /***************************************************************************
+     * Metoda, prostřednictvím níž se spouští celá aplikace.
+     *
+     * @param args Parametry příkazového řádku
+     */
+    public static void main(String[] args)
+    {
+        List<String> vstup = Arrays.asList(args);
+
+        if(vstup.contains("text")) {
+            IHra hra = new Hra();
+            TextoveRozhrani ui = new TextoveRozhrani(hra);
+            ui.hraj();
+        }
+
+        else{
+            launch();
+        }
+
+
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Karkulka");
+        primaryStage.show();
+
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = loader.load(getClass().getClassLoader().getResourceAsStream("scene.fxml"));
+
+
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+
+        MainController controller = loader.getController();
+        controller.init();
+    }
+}
